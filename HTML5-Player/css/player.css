@@ -104,6 +104,60 @@
 .ppcontrols .ppmsg p {
     margin: 0;
 }
+/**
+** ppvolume
+**/
+.ppcontrols .ppvol {
+	width: 135px;
+	height:60px;
+	line-height: 60px;
+	position: relative;
+	margin-right: 10px;
+}
+.ppcontrols .ppvol .ppvolbackground{
+	width: 100px;
+	top: 20px;
+	left: 35px;	
+	height:10px;
+	line-height: 10px;
+	background: #E5E5E5;
+	position: absolute;
+	z-index: 8;
+}
+.ppcontrols .ppvol .ppvolIcon {
+	width: 30px;
+	height: 30px;
+	background: #E5E5E5;
+	top: 10px;
+	left: 0;
+	margin-right: 5px;
+	position: absolute;
+	
+}
+.ppcontrols .ppvol .ppvolCurrent{
+	width: 10px;
+	top: 20px;
+	left: 35px;	
+	height:10px;
+	line-height: 10px;
+	background: red;
+	position: absolute;
+	z-index: 9;
+}
+.ppcontrols .ppvol .ppvolhead {
+	width: 100px;
+	top: 20px;
+	left: 35px;	
+	height:10px;
+	line-height: 10px;
+	background: #E5E5E5;
+	position: absolute;
+	z-index: 10;
+	opacity: 0;
+}
+/**
+** ppvolume
+**/
 .listSelectLang {
     display: none;
     padding-left: 0;

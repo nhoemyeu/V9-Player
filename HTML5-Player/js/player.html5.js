@@ -63,6 +63,11 @@ VP9.playerHTML5 = function(player) {
 			.appendTo(player.$display);
 
 		player.$buffering = $('<div class="ppbuffering_" style="display:none"></div>').appendTo(player.$display);
+		// click on screen to stop or play
+		player.$media.on('click', function(event) {
+				event.preventDefault();
+				player.$playBtn.click();
+			});
 	}
 
 	this.creatControls = function() {
@@ -127,6 +132,59 @@ VP9.playerHTML5 = function(player) {
 					event.preventDefault();
 					player.setVideo('prev');
 				});
+				
+		}
+		// control volume
+		if($.inArray('volume',player.options.controls) >= 0){
+			player.addControl('volBtn','<div class="ppvol"><div class="ppvolIcon"></div><div class="ppvolbackground"></div><div class="ppvolCurrent" style="width: '+10+'px"></div><div class="ppvolhead"></div></div>','.right');
+			player.$vol = player.$volBtn.find('.ppvolhead');
+			player.$volCurrent = player.$volBtn.find('.ppvolCurrent');
+			player.$volCurrent.css('width','100px');
+			player.$vol.on('click',function(event){
+				event.preventDefault();
+			        var x = $(this).offset().left;
+				var v = event.clientX - x;
+				player.$volCurrent.css('width',v+'px');
+				_this.ui.setVolume(v);
+
+		
+			});
+			player.$mute = player.$volBtn.find('.ppvolIcon');
+			player.$mute.on('click',function(event){
+				event.preventDefault();
+				if(!_this.$video[player.activeVideo].muted){
+					player.$volCurrent.css('width','0');
+					_this.$video[player.activeVideo].muted = true;
+				}else{
+					player.$volCurrent.css('width',_this.$video[player.activeVideo].volume*100+'px');
+					_this.$video[player.activeVideo].muted = false;
+				}
+			});
+			var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
+			player.$mute.on(mousewheelevt,function(e){
+				e.preventDefault();
+				var volCurrent = _this.$video[player.activeVideo].volume;
+				if(e.originalEvent.detail >0 ){
+					var vol = (volCurrent >= 1 )?1:volCurrent + 0.1;
+					
+					_this.ui.setVolume(vol*100);
+				}else{
+					var vol = (volCurrent <=0 )?0:volCurrent - 0.1;
+					_this.ui.setVolume(vol*100);
+				}
+			});
+			player.$vol.on(mousewheelevt,function(e){
+				e.preventDefault();
+				var volCurrent = _this.$video[player.activeVideo].volume;
+				if(e.originalEvent.detail <0 ){
+					var vol = (volCurrent >= 1 )?1:volCurrent + 0.1;
+					
+					_this.ui.setVolume(vol*100);
+				}else{
+					var vol = (volCurrent <=0 )?0:volCurrent - 0.1;
+					_this.ui.setVolume(vol*100);
+				}
+			});
 		}
 	}
 
@@ -298,6 +356,13 @@ VP9.playerHTML5 = function(player) {
     	_this.$elp.html(currentTime);
     }
 
+    this.ui.setVolume = function(vol){
+	var video = _this.$video[player.activeVideo];
+	player.$currentVol  = video.volume;
+	video.volume = vol/100;
+	player.$volCurrent.css('width',vol+'px');
+	_this.$video[player.activeVideo].muted = false;
+    }
     this.ui.setStop = function() {
     	_this.$dur.html('00:00:00');
     	_this.$elp.html('00:00:00');

@@ -41,7 +41,7 @@
             plugins: ['subtitle'], //['subtitle', 'karaoke', 'epg']
             controls: ['timeleft', 'progress', 'fullscreen', 'next', 'prev'],
             swf: 'projekktor/swf/', //swf projekktor folder
-            tagClick: false, // true | false
+            tagClick: true, // true | false
             scale: true, // true | false
             playlist: [
                 /*{
@@ -52,7 +52,7 @@
 	  					// type: 'application/mpegURL',
 	  					live: true
 	  				}
-	  			}*/
+	  			}
                 {
                     0: {
                         id: '',
@@ -68,7 +68,21 @@
                         src: 'http://f.vp9.tv/720p/discovery/discovery-channel-speed-of-life-part-1.2010.vp9.mp4',
                         type: 'video/mp4',
                         subtitle: ['http://f.vp9.tv/sub/2013/the-croods.2013.vie.ass', 'http://f.vp9.tv/sub/2013/the-croods.2013.eng.ass']
-                    }
+                    },*/
+                    {
+                    	0: {
+                        	id: '',
+                        	name: 'Phim 2',
+                        	src: 'video/test.mp4',
+                        	type: 'video/mp4',
+                    	}
+                    },{
+                    	0: {
+                        	id: '',
+                        	name: 'Phim 3', 
+                        	src: 'video/test.mp4',
+                        	type: 'video/mp4',
+                    	}
                 }
             ],
             ready: function() {
